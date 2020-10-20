@@ -1,0 +1,91 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+html {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-size: cover;
+    background-position: center center;
+    transition: background-image 1s ease-in-out;
+}
+
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color:white;
+    text-shadow: 0 0 5px #000,
+    0 0 2px #000,
+    0 0 1px #000;
+
+}
+.content_focus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
+}
+#time {
+    font-size: 8rem;
+}
+#day {
+    font-size: 4rem;
+}
+.greeting {
+    font-size: 2.5rem;
+    margin: 3rem 0;
+}
+
+#name, #focus {
+    display: inline-block;
+    min-width: 10rem;
+    white-space: nowrap;
+}
+
+.btn {
+    width: 60px;
+    height: 60px;
+    color: white;
+    font-weight: bold;
+    margin: 10px;
+    border-radius: 50%;
+
+    text-decoration: none;
+    text-shadow: 0 -1px 1px #a81808;
+    user-select: none;
+    outline: none;
+    background: linear-gradient(to left, rgba(0,0,0,.3), rgba(0,0,0,.0) 50%, rgba(0,0,0,.3)), linear-gradient(#2c347a, #4c1d6e, #2c347a);
+    background-size: 100% 100%, auto;
+    background-position: 50% 50%;
+    box-shadow: inset #630e9c 0 -1px 1px, inset 0 1px 1px #ffbf00, #7a0c33 0 0 0 1px, #000 0 10px 15px -10px;
+    transition: 0.2s;
+}
+.btn:hover {
+    background-size: 140% 100%, auto;
+}
+.btn:active {
+    top: 1px;
+    color: #ffdead;
+    box-shadow: inset #630e9c 0 -1px 1px, inset 0 1px 1px #ffbf00, #cc7722 0 0 0 1px, 0 10px 10px -9px #000;
+}
+
+@media screen and (max-width: 700px) {
+    html {
+       font-size: 12px;
+   }
+}
+
+@media screen and (max-width: 500px) {
+    html {
+        font-size: 8px;
+    }
+}
