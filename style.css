@@ -6,13 +6,16 @@
 html {
     font-size: 15px;
     font-weight: bold;
+    height: 100%;
 }
 
 body {
     font-family: 'Lato', sans-serif;
+    height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
     transition: background-image 1s ease-in-out;
+    position: relative;
 }
 
 
@@ -21,7 +24,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
     color:white;
     text-shadow: 0 0 5px #000,
     0 0 2px #000,
@@ -103,7 +105,7 @@ blockquote {
     transform: translate(-50%, 79%);
     padding:1rem;
     font-size:1.1rem;
-    z-index: 2;
+    z-index: 1;
 }
 blockquote p {
     color: #000;
@@ -113,10 +115,10 @@ blockquote cite {
 }
 .quoteBtn {
     position: absolute;
-    left: 72%;
-    top: 99%;
-    transform: translate(-72%, 99%);
-    z-index: 3;
+    left: 100%;
+    top: 89%;
+    transform: translate(-100%, 89%);
+    z-index: 1;
 }
 .button {
     border: 2px solid #4a4a4a;
@@ -173,7 +175,7 @@ blockquote cite {
 
 @media screen and (max-width: 500px) {
     html {
-        font-size: 8px;
+        font-size: 7px;
     }
 }
 

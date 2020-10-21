@@ -39,9 +39,9 @@ function showGreeting() {
     timesOfDays.innerHTML = "Good " + timeOfDay + ", ";
 }
 
-function  getTimeOfDay() {
+function  getTimeOfDay(hour) {
     let today = new Date();
-    let hour = today.getHours();
+    if (hour == undefined) hour = today.getHours();
     let timeOfDay;
     if (hour < 6) {
         timeOfDay = times[3];
@@ -61,19 +61,27 @@ function getName() {
     }
 }
 function setName(e) {
+    let nameText;
     if (e.type === 'keypress') {
-        if (e.target.innerText === '[EnterName]' || e.target.innerText === localStorage.getItem('name')) {
+        if( e.target.innerText === localStorage.getItem('name')) {
+            nameText = e.target.innerText;
+            e.target.innerText = '';
+        } else if (e.target.innerText === '[EnterName]') {
             e.target.innerText = '';
         }
             if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-            if (e.target.innerText === '' && !localStorage.getItem('name')) {
-                name.textContent = '[EnterName]';
-            } else localStorage.setItem('name', e.target.innerText);
+                if (e.target.innerText === '') {
+                    if (nameText != undefined){
+                        name.textContent = nameText;
+                    } else name.textContent = '[EnterName]';
+                } else localStorage.setItem('name', e.target.innerText);
             name.blur();
         }
     } else {
-        if (e.target.innerText === '' && !localStorage.getItem('name')) {
-            name.textContent = '[EnterName]';
+        if (e.target.innerText === '') {
+            if (nameText != undefined){
+                name.textContent = nameText;
+            } else name.textContent = '[EnterName]';
         } else localStorage.setItem('name', e.target.innerText);
     }
 
@@ -87,29 +95,37 @@ function getFocus() {
     }
 }
 function setFocus(e) {
+    let focusText;
     if (e.type === 'keypress') {
-        if (e.target.innerText === '[EnterFocus]' || e.target.innerText === localStorage.getItem('focus')) {
+        if( e.target.innerText === localStorage.getItem('focus')) {
+            focusText = e.target.innerText;
+            e.target.innerText = '';
+        } else if (e.target.innerText === '[EnterFocus]') {
             e.target.innerText = '';
         }
         if (e.code === 'Enter' || e.code === 'NumpadEnter') {
-            if (e.target.innerText === '' && !localStorage.getItem('focus')) {
-                focus.textContent = '[EnterFocus]';
+            if (e.target.innerText === '') {
+                if (focusText != undefined){
+                    focus.textContent = focusText;
+                } else focus.textContent = '[EnterFocus]';
             } else localStorage.setItem('focus', e.target.innerText);
             focus.blur();
         }
     } else {
-        if (e.target.innerText === ''&& !localStorage.getItem('focus')) {
-            focus.textContent = '[EnterFocus]';
+        if (e.target.innerText === '') {
+            if (focusText != undefined){
+                focus.textContent = focusText;
+            } else focus.textContent = '[EnterFocus]';
         } else localStorage.setItem('focus', e.target.innerText);
     }
 
 }
 
-
 // change background
 const base = './assets/images/';
 const images = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg', '06.jpg', '07.jpg', '08.jpg', '09.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'];
-let i = 0;
+const imagesDay = [];
+let j = 0;
 
 function viewImage(data) {
     const body = document.querySelector('body');
@@ -123,36 +139,29 @@ function viewImage(data) {
 
 function getImage() {
     //const index = i % images.length;
-    const min = Math.ceil(1);
-    const max = Math.floor(21);
-    const index = Math.floor(Math.random() * (max - min)) + min;
-    let timeOfDay = getTimeOfDay();
-    const imageSrc = base + timeOfDay + '/' + images[index];
-   // viewImage(imageSrc);
-    setTimeout(viewImage(imageSrc), 1000);
-    i++;
+    let today = new Date();
+    let hour = today.getHours();
+    let timeOfDay;
+    let imageSrc;
+    for(let i = 0; i < 24; i++) {
+        const index = Math.floor(Math.random() * (Math.floor(images.length) - Math.ceil(1))) + Math.ceil(1);
+        timeOfDay = getTimeOfDay(hour);
+        imageSrc = base + timeOfDay + '/' + images[index];
+        if (imagesDay.includes(imageSrc)) {
+            i--;
+        } else {
+            imagesDay.push(imageSrc);
+            hour++;
+            if (hour === 24) hour = 0;
+        }
+    };
+    console.log(imagesDay);
+    viewImage(imagesDay[0]);
 }
 
 function getImageBtn() {
-    let timeOfDay;
-    if (hourBtn  === undefined) {
-        let today = new Date();
-        let hour = today.getHours();
-        hourBtn = hour;
-    }
-    if (hourBtn < 6) {
-        timeOfDay = times[3];
-    } else if (hourBtn < 12) {
-        timeOfDay = times[0];
-    } else if (hourBtn < 18 ) {
-        timeOfDay = times[1];
-    } else  timeOfDay = times[2];
-    const index = i % images.length;
-    const imageSrc = base + timeOfDay + '/' + images[index];
-    viewImage(imageSrc);
-    i++;
-    hourBtn ++;
-    if (hourBtn == 24) hourBtn = 0;
+    if (j === 24) j = 0;
+    viewImage(imagesDay[++j]);
 }
 
 function showImage () {
