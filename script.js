@@ -155,14 +155,21 @@ function getImage() {
             if (hour === 24) hour = 0;
         }
     };
-    console.log(imagesDay);
     viewImage(imagesDay[0]);
 }
+console.log(imagesDay);
 
 function getImageBtn() {
+    j++;
     if (j === 24) j = 0;
-    viewImage(imagesDay[++j]);
-}
+    console.log(imagesDay[j]);
+    console.log(j);
+    viewImage(imagesDay[j]);
+    btn.disabled = true;
+    setTimeout(() => {
+        btn.disabled = false;
+    }, 1000);
+};
 
 function showImage () {
     let today = new Date();
@@ -645,6 +652,90 @@ const quoteBtn = document.querySelector('.quoteBtn');
 }
 document.addEventListener('DOMContentLoaded', getQuote);
 quoteBtn.addEventListener('click', getQuote);
+
+
+
+// WEATHER
+
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const city = document.querySelector('.city');
+const humidity = document.querySelector('.humidity');
+const speed = document.querySelector('.speed');
+const err = document.querySelector('.err');
+const weatherInfo = document.querySelector('.weather-info');
+let error;
+
+async function getWeather() {
+    if (localStorage.getItem('city') === null) {
+        city.textContent = 'Минск';
+    } else {
+        city.textContent = localStorage.getItem('city');
+    }
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=en&appid=61d682ad500d78deffe13e76115885a1&units=metric`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.weather === undefined) {
+        if (!err.classList.contains('visibility')) {
+            err.classList.add('visibility');
+        }
+        if (!weatherInfo.classList.contains('hidden')) {
+            weatherInfo.classList.add('hidden');
+        }
+        error = true;
+        localStorage.setItem('city', 'Минск');
+        city.textContent = '';
+        city.focus();
+    } else {
+        if (err.classList.contains('visibility')) {
+            err.classList.remove('visibility');
+        }
+        if (weatherInfo.classList.contains('hidden')) {
+            weatherInfo.classList.remove('hidden');
+        }
+        weatherIcon.className = 'weather-icon owf';
+        weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+        temperature.textContent = `${data.main.temp}°C`;
+        weatherDescription.textContent = data.weather[0].description;
+        humidity.textContent = `${data.main.humidity}%`;
+        speed.textContent = `${data.wind.speed} m/s`;
+        error = false;
+    };
+
+}
+
+function setCity(e) {
+    let cityText;
+    if (e.type === 'keypress') {
+        if( e.target.innerText === localStorage.getItem('city') && !error) {
+            cityText = e.target.innerText;
+            e.target.innerText = '';
+        } else if (e.target.innerText === 'Минск') {
+            e.target.innerText = '';
+        }
+        if (e.code === 'Enter' || e.code === 'NumpadEnter') {
+            if (e.target.innerText === '') {
+                if (cityText != undefined){
+                    city.textContent = cityText;
+                } else city.textContent = 'Минск';
+            } else localStorage.setItem('city', e.target.innerText);
+            city.blur();
+            getWeather();
+        }
+    } else {
+        if (e.target.innerText === '') {
+            if (cityText != undefined){
+                city.textContent = cityText;
+            } else focus.textContent = 'Минск';
+        } else localStorage.setItem('city', e.target.innerText);
+    }
+
+}
+
+document.addEventListener('DOMContentLoaded', getWeather);
+city.addEventListener('keypress', setCity);
+city.addEventListener('blur', setCity);
 
 getImage();
 setInterval(showTime, 1000);

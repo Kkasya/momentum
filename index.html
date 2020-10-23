@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Momentum</title>
+    <link rel="stylesheet" href="owfont-regular.css">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
@@ -14,6 +15,23 @@
 
     <header>
         <button class="btn"> UPDATE </button>
+        <div class="weather">
+            <div class="city" contenteditable="true" tabindex="0">Минск</div>
+            <div class="err">
+                <p>This city doesn't exist</p>
+                <p>Try again</p>
+            </div>
+            <div class="weather-info">
+                <i class="weather-icon owf"></i>
+                <div class="temperature"></div>
+                <div class="info">
+                    <div>φ: </div><div class="humidity"></div>
+                    <div>Wind: </div><div class="speed"></div>
+                </div>
+                <div class="weather-description"></div>
+            </div>
+
+        </div>
     </header>
     <main class="content">
         <h1 id="time"></h1>
@@ -27,15 +45,19 @@
             <span id="focus" contenteditable="true">[Enter Focus]</span>
         </h2>
     </main>
-    <figure class="quote">    </figure>
+    <footer>
+        <figure class="quote">
+            <blockquote>
+                <p class="blockquote"></p>
+                <cite class="figcaption"></cite>
+                <div class="quoteBtn">
+                    <a href="#" class="button">More</a>
+                </div>
+            </blockquote>
 
-    <blockquote>
-            <p class="blockquote"></p>
-            <cite class="figcaption"></cite>
-        <div class="quoteBtn">
-            <a href="#" class="button">More</a>
-        </div>
-    </blockquote>
+        </figure>
+    </footer>
+
 
 
     <script src="script.js"></script>

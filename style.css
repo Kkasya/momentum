@@ -11,19 +11,85 @@ html {
 
 body {
     font-family: 'Lato', sans-serif;
-    height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
     transition: background-image 1s ease-in-out;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    flex: 0 0 auto;
 }
 
+.weather {
+    margin: 1rem 1rem 0 1rem;
+    text-align: center;
+    background: rgba(0, 170, 255, .3);
+    color: white;
+    font-size: 1rem;
+    border-radius: 1rem;
+    text-shadow: 0 0 5px #000,
+    0 0 2px #000,
+    0 0 1px #000;
+}
+.city {
+    padding: 0.2rem 0;
+    margin: 0.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.err {
+    display: none;
+    margin: 0.5rem;
+}
+.temperature {
+    font-size: 1.5rem;
+}
+
+.weather-description {
+    margin: 0.5rem 0.2rem 0.2rem 0.2rem;
+
+}
+.weather-info {
+
+}
+.weather-icon {
+    font-size: 1.6rem;
+}
+.weather-icon:hover {
+    animation: shake 1.5s;
+}
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(1px, -2px) rotate(-1deg); }
+    30% { transform: translate(1px, 2px) rotate(0deg); }
+    50% { transform: translate(1px, 0) rotate(-1deg); }
+    70% { transform: translate(1px, 1px) rotate(-1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+.info div {
+    margin: 0.2rem;
+}
+main {
+    flex: 1 0 auto;
+}
 
 .content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: -3rem;
     color:white;
     text-shadow: 0 0 5px #000,
     0 0 2px #000,
@@ -34,7 +100,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 #time {
     font-size: 8rem;
@@ -43,7 +109,7 @@ body {
     font-size: 4rem;
 }
 .greeting {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin: 3rem 0;
 }
 
@@ -58,16 +124,15 @@ body {
     height: 60px;
     color: white;
     font-weight: bold;
-    margin: 10px;
+    margin: 1rem 1rem 0 1rem;
     border-radius: 50%;
     cursor: pointer;
-
     text-decoration: none;
     text-shadow: 0 -1px 1px #a81808;
     user-select: none;
     outline: none;
     background: linear-gradient(to left, rgba(0,0,0,.3), rgba(0,0,0,.0) 50%, rgba(0,0,0,.3)), linear-gradient(#2c347a, #4c1d6e, #2c347a);
-    background-size: 100% 100%, auto;
+    background-size: 10% 100%, auto;
     background-position: 50% 50%;
     box-shadow: inset #630e9c 0 -1px 1px, inset 0 1px 1px #ffbf00, #7a0c33 0 0 0 1px, #000 0 10px 15px -10px;
     transition: 0.2s;
@@ -81,31 +146,26 @@ body {
     box-shadow: inset #630e9c 0 -1px 1px, inset 0 1px 1px #ffbf00, #cc7722 0 0 0 1px, 0 10px 10px -9px #000;
 }
 
+footer {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+}
 .quote {
-    position: absolute;
-    background: #fbfbfb;
+    background: rgba(251, 251, 251, .5);
     border: none;
     border-radius: 10px;
-    opacity: 0.4;
     width: 41rem;
-    left: 50%;
-    top: 79%;
-    transform: translate(-50%, 79%);
     height: 5rem;
-    z-index: 1;
+    border:solid #4a4a4a;
+    border-width:3px 0;
 }
 
 blockquote {
-    position: absolute;
-    border:solid #4a4a4a;
-    border-width:3px 0;
-    width: 40rem;
-    left: 50%;
-    top: 79%;
-    transform: translate(-50%, 79%);
-    padding:1rem;
+    display: inline-block;
+    width: 41rem;
+    padding:1rem 1rem 0 1rem;
     font-size:1.1rem;
-    z-index: 1;
 }
 blockquote p {
     color: #000;
@@ -114,13 +174,10 @@ blockquote cite {
     font-size: 0.9rem;
 }
 .quoteBtn {
-    position: absolute;
-    left: 100%;
-    top: 89%;
-    transform: translate(-100%, 89%);
-    z-index: 1;
+    float: right;
 }
 .button {
+    position: relative;
     border: 2px solid #4a4a4a;
     border-radius: 10px;
     font-size: 1rem;
@@ -135,14 +192,11 @@ blockquote cite {
     text-align: center;
     margin: auto;
     font-family: Arial, sans-serif;
-    position: absolute;
-    bottom: 0.5rem;
-    right: 0;
     transition: .5s;
     overflow: hidden;
+    z-index: 1;
 }
-.button::before,
-.button::after {
+.button::before {
     position: absolute;
     content: '';
     width: 100%;
@@ -152,11 +206,19 @@ blockquote cite {
     left: -100%;
     opacity: .5;
     transition: .3s;
-    z-index: -1;
+    z-index: -2;
 }
 .button::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #5034bf;
+    top: 0;
+    left: -100%;
     opacity: 1;
-    transition-delay: .2s;
+    transition-delay: .5s;
+    z-index: -1;
 }
 .button:hover {
     color: #fff;
@@ -177,5 +239,12 @@ blockquote cite {
     html {
         font-size: 7px;
     }
+}
+
+.visibility {
+    display: block;
+}
+.hidden {
+    display: none;
 }
 
